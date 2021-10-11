@@ -1,16 +1,20 @@
-var axios = require("axios").default;
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query';
 
-var options = {
-  method: 'GET',
-  url: 'https://coinranking1.p.rapidapi.com/stats',
-  headers: {
+const cryptoApiHeaders = {
     'x-rapidapi-host': 'coinranking1.p.rapidapi.com',
     'x-rapidapi-key': '43aedcd373msh75ecc7e0896fec7p15ca09jsn15efb283dbc7'
   }
-};
 
-axios.request(options).then(function (response) {
-	console.log(response.data);
-}).catch(function (error) {
-	console.error(error);
-});
+const baseUrl = 'https://coinranking1.p.rapidapi.com/stats'
+
+const createRequest = (url) => ({ url, headers:cryptoApiHeaders});
+
+export const cryptoApi = createApi({
+    reducerPath: 'cryptoApi',
+    baseQuery: fetchBaseQuery({ baseUrl }),
+    endpoints: (builder) => ({
+        getCryptos: builder.query({
+            query: () => createRequest('/exchanges')
+        })
+    })
+})
