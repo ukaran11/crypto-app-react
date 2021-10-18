@@ -17,6 +17,7 @@ import {
 
 import { useGetCryptoDetailsQuery } from '../services/cryptoApi';
 import { Cryptocurrencies } from ".";
+import LineChart from "./LineChart";
 const { Title, Text } = Typography;
 const { Option } = Select;
 
@@ -62,7 +63,13 @@ const CryptoDetails = () => {
             onChange={(value) =>  setTimePeriod(value)}>
               {time.map((date) => <Option key={date}>{date}</Option>)}
           </Select>
-          {/* Line chart */}
+
+          <LineChart 
+            // coinHistory={coinHistory}
+            currentPrice={millify(cryptoDetails.price)}
+            coinName={cryptoDetails.name}
+            />
+
           <Col className="stats-container">
             <Col className="coin-value-statistics">
               <Col className="coin-value-statistics-heading">
